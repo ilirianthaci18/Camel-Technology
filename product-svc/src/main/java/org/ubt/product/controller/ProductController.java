@@ -8,9 +8,8 @@ import org.ubt.product.service.ProductService;
 
 import java.util.List;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RequestMapping("api/v1/product")
+//@RequestMapping("/api/v1/product")
 @RestController
 public class ProductController {
 
@@ -20,7 +19,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @GetMapping("/getProducts")
     public List<Product> products() throws InterruptedException {
         return productService.getProducts();
     }

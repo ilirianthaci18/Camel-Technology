@@ -29,6 +29,6 @@ public class WareHouse {
     @Column
     private String wareHouseSerialNumberPalett;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "warehouse", fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "warehouse", fetch = FetchType.LAZY)
+//    private List<Product> productList = new ArrayList<>();
 }
