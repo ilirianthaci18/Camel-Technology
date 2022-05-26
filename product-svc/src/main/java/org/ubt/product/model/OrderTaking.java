@@ -23,6 +23,6 @@ public class OrderTaking {
     @Column
     private String status;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "ordertaking", fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "ordertaking", fetch = FetchType.LAZY)
+//    private List<Product> productList = new ArrayList<>();
 }

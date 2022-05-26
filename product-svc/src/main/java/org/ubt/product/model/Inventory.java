@@ -36,6 +36,6 @@ public class Inventory {
     @Column
     private String inventoryType;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "inventory", fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "inventory", fetch = FetchType.LAZY)
+//    private List<Product> productList = new ArrayList<>();
 }

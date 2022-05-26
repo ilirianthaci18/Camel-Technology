@@ -32,6 +32,6 @@ public class Brand {
     @Column
     private boolean favorite;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "brand", fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "brand", fetch = FetchType.LAZY)
+//    private List<Product> productList = new ArrayList<>();
 }
