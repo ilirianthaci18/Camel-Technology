@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
     private Info getApiInfo() {
         return new Info()
-                .title("User API")
+                .title("Profile API")
                 .description("Documentation of API Endpoints")
                 .version("v1.0")
                 .license(null)
