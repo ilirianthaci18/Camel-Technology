@@ -30,6 +30,7 @@ public class Product {
     @Column
     private String code;
 
+    @NonNull
     @Column
     private String fullDescription;
 
