@@ -13,6 +13,7 @@
         <module>order-svc</module>
         <module>notification-svc</module>
         <module>chat-svc</module>
+        <module>eureka-server</module>
     </modules>
 
     <groupId>org.ubt</groupId>
