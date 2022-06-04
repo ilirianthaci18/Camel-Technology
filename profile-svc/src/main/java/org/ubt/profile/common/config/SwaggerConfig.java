@@ -1,4 +1,4 @@
-package org.ubt.chat.config;
+package org.ubt.profile.common.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
     private Info getApiInfo() {
         return new Info()
-                .title("Chat API")
+                .title("Profile API")
                 .description("Documentation of API Endpoints")
                 .version("v1.0")
                 .license(null)

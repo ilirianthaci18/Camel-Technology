@@ -1,4 +1,4 @@
-package org.ubt.product.config;
+package org.ubt.order.common.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
     private Info getApiInfo() {
         return new Info()
-                .title("Product API")
+                .title("Order API")
                 .description("Documentation of API Endpoints")
                 .version("v1.0")
                 .license(null)
