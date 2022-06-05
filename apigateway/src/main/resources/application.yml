@@ -1,0 +1,25 @@
+server:
+  port: 8183
+
+spring:
+  application:
+    name: api-gateway
+  zipkin:
+    base-url: http://localhost:9411
+  cloud:
+    gateway:
+      routes:
+        - id: product-svc
+          uri : lb://PRODUCT-SVC
+          predicates:
+            - Path=/api/v1/product/**
+  main:
+    web-application-type: reactive
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:87621/eureka
+    fetch-registry: true
+    register-with-eureka: true
+

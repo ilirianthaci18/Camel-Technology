@@ -1,5 +1,6 @@
 package org.ubt.product.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +9,9 @@ import org.ubt.product.service.ProductService;
 
 import java.util.List;
 
-
-//@RequestMapping("/api/v1/product")
+@CrossOrigin(originPatterns = "*")
 @RestController
+@RequestMapping("/api/v1/product")
 public class ProductController {
 
     private ProductService productService;
@@ -24,3 +25,4 @@ public class ProductController {
         return productService.getProducts();
     }
 }
+
