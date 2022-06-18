@@ -1,24 +1,35 @@
 package org.ubt.product.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.ubt.product.common.dto.CartProductDTO;
+import org.ubt.product.common.dto.PaginatedResponse;
+import org.ubt.product.common.dto.PaginationRequest;
+import org.ubt.product.common.mappers.PaginationMapper;
 import org.ubt.product.model.Product;
 import org.ubt.product.repository.ProductRepository;
+import org.ubt.product.common.mappers.ProductMapper.*;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.ubt.product.common.mappers.ProductMapper.toCartProductDTO;
+
 @Slf4j
 @Service
 public class ProductServiceImpl implements ProductService{
 
     private ProductRepository productRepository;
+    private PaginationMapper paginationMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, PaginationMapper paginationMapper) {
         this.productRepository = productRepository;
+        this.paginationMapper = paginationMapper;
     }
 
     @PostConstruct
@@ -67,14 +78,44 @@ public class ProductServiceImpl implements ProductService{
         products.add(iphone11);
 
 
-        Iterable<Product> products1 = productRepository.saveAll(products);
+//        Iterable<Product> products1 = productRepository.saveAll(products);
     }
 
-    @Cacheable("products")
+    @Cacheable(key="products",value = "Product")
     public List<Product> getProducts() throws InterruptedException {
         log.info("Calling service to get Products data...");
         log.debug("This is debug Calling service to get Products data...");
         return productRepository.findAll();
     }
 
+    @Override
+    @CacheEvict(key="products",value = "Product")
+    public void removeProduct(Long id) {
+        log.info("Removing product with id "+ id);
+        productRepository.delete(productRepository.getById(id));
+    }
+
+    @Override
+    public Product updateProduct(Product product) {
+        log.info("Updating product with id "+ product.getId());
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product getProductById(Long id) {
+        log.info("Getting product with id "+ id);
+        return productRepository.getById(id);
+    }
+
+    @Override
+    public CartProductDTO getProductByCode(String productCode) {
+        return toCartProductDTO(productRepository.findProductByCode(productCode));
+    }
+
+    @Override
+    public PaginatedResponse<Product> paginatedProducts(PaginationRequest paginationRequest) {
+        Page result=productRepository.findAll(paginationMapper.toPageRequest(paginationRequest));
+
+        return paginationMapper.toPaginatedResponse(result);
+    }
 }
