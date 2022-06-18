@@ -11,17 +11,19 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "*"
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
             allowedMethods:
-              -GET
-              -POST
-              -PUT
-              -DELETE
+              - GET
+              - POST
+              - PUT
+              - DELETE
       routes:
         - id: product-svc
           uri : lb://PRODUCT-SVC
           predicates:
             - Path=/api/v1/product/**
+
   main:
     web-application-type: reactive
 

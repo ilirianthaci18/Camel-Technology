@@ -1,12 +1,14 @@
 package org.ubt.product.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.ubt.product.common.dto.CartProductDTO;
+import org.ubt.product.common.dto.PaginatedResponse;
+import org.ubt.product.common.dto.PaginationRequest;
 import org.ubt.product.model.Product;
 import org.ubt.product.service.ProductService;
 
+import javax.ws.rs.Path;
 import java.util.List;
 
 @CrossOrigin(originPatterns = "*")
@@ -23,6 +25,31 @@ public class ProductController {
     @GetMapping("/getProducts")
     public List<Product> products() throws InterruptedException {
         return productService.getProducts();
+    }
+
+    @DeleteMapping("/{id}")
+    public void removeProduct(@PathVariable Long id){
+        productService.removeProduct(id);
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id){
+        return productService.getProductById(id);
+    }
+
+    @PutMapping()
+    public Product updateProduct(@RequestBody Product product){
+        return productService.updateProduct(product);
+    }
+
+    @PostMapping("/pagination")
+    public ResponseEntity<PaginatedResponse<Product>> getProducts(@RequestBody PaginationRequest paginationRequest){
+        return ResponseEntity.ok(productService.paginatedProducts(paginationRequest));
+    }
+
+    @GetMapping("/getProductByCode/{productCode}")
+    public CartProductDTO getProductByCode(@PathVariable String productCode){
+        return productService.getProductByCode(productCode);
     }
 }
 

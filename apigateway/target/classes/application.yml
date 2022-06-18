@@ -8,11 +8,22 @@ spring:
     base-url: http://localhost:9411
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
       routes:
         - id: product-svc
           uri : lb://PRODUCT-SVC
           predicates:
             - Path=/api/v1/product/**
+
   main:
     web-application-type: reactive
 
