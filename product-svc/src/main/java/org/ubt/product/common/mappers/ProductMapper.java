@@ -1,7 +1,7 @@
 package org.ubt.product.common.mappers;
 
 import org.modelmapper.ModelMapper;
-import org.ubt.product.common.dto.CartProductDTO;
+import org.ubt.clients.product.dto.CartProductDTO;
 import org.ubt.product.model.Product;
 
 public class ProductMapper {

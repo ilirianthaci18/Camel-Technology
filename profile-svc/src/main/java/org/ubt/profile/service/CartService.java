@@ -1,6 +1,6 @@
 package org.ubt.profile.service;
 
-import org.ubt.profile.common.dto.CartProductDTO;
+import org.ubt.clients.product.dto.CartProductDTO;
 
 import java.util.List;
 

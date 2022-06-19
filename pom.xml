@@ -15,6 +15,7 @@
         <module>chat-svc</module>
         <module>eureka-server</module>
         <module>apigateway</module>
+        <module>clients</module>
     </modules>
 
     <groupId>org.ubt</groupId>

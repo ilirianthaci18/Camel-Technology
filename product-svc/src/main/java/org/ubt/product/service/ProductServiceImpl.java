@@ -5,13 +5,12 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.ubt.product.common.dto.CartProductDTO;
+import org.ubt.clients.product.dto.CartProductDTO;
 import org.ubt.product.common.dto.PaginatedResponse;
 import org.ubt.product.common.dto.PaginationRequest;
 import org.ubt.product.common.mappers.PaginationMapper;
 import org.ubt.product.model.Product;
 import org.ubt.product.repository.ProductRepository;
-import org.ubt.product.common.mappers.ProductMapper.*;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -110,6 +109,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public CartProductDTO getProductByCode(String productCode) {
         return toCartProductDTO(productRepository.findProductByCode(productCode));
+    }
+
+    @Override
+    public List<String> getProductNames() {
+        return productRepository.productName();
     }
 
     @Override

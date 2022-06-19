@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import org.ubt.profile.common.dto.CartProductDTO;
+import org.ubt.clients.product.dto.CartProductDTO;
 
 import java.util.List;
 
