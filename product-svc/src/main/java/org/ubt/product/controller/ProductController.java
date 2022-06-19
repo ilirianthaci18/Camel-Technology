@@ -2,13 +2,12 @@ package org.ubt.product.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ubt.product.common.dto.CartProductDTO;
+import org.ubt.clients.product.dto.CartProductDTO;
 import org.ubt.product.common.dto.PaginatedResponse;
 import org.ubt.product.common.dto.PaginationRequest;
 import org.ubt.product.model.Product;
 import org.ubt.product.service.ProductService;
 
-import javax.ws.rs.Path;
 import java.util.List;
 
 @CrossOrigin(originPatterns = "*")
@@ -25,6 +24,11 @@ public class ProductController {
     @GetMapping("/getProducts")
     public List<Product> products() throws InterruptedException {
         return productService.getProducts();
+    }
+
+    @GetMapping("/names")
+    public List<String> productNames(){
+        return productService.getProductNames();
     }
 
     @DeleteMapping("/{id}")

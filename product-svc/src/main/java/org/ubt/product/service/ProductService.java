@@ -1,6 +1,6 @@
 package org.ubt.product.service;
 
-import org.ubt.product.common.dto.CartProductDTO;
+import org.ubt.clients.product.dto.CartProductDTO;
 import org.ubt.product.common.dto.PaginatedResponse;
 import org.ubt.product.common.dto.PaginationRequest;
 import org.ubt.product.model.Product;
@@ -13,5 +13,6 @@ public interface ProductService {
     Product updateProduct(Product product);
     Product getProductById(Long id);
     CartProductDTO getProductByCode(String productCode);
+    List<String> getProductNames();
     PaginatedResponse<Product> paginatedProducts(PaginationRequest paginationRequest);
 }
