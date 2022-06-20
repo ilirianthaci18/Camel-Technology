@@ -39,3 +39,7 @@ networks:
 volumes:
   postgres:
   pgadmin:
+
+
+
+#PGADMIN password admin
