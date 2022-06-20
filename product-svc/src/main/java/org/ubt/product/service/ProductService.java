@@ -9,10 +9,15 @@ import java.util.List;
 
 public interface ProductService {
     List<Product> getProducts() throws InterruptedException;
+    void saveProduct(Product product);
     void removeProduct(Long id);
     Product updateProduct(Product product);
     Product getProductById(Long id);
     CartProductDTO getProductByCode(String productCode);
     List<String> getProductNames();
+    void removeProductQuantity(String productCode, Integer quantity);
+    boolean checkQuantityProduct(String productCode, Integer quantity);
+    void addQuantityInProduct(String productCode ,Integer quantity);
+    Product getProductFromCode(String productCode);
     PaginatedResponse<Product> paginatedProducts(PaginationRequest paginationRequest);
 }
