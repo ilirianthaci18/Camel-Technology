@@ -6,10 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.User;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.ubt.order.common.dto.ProductDTOOrder;
 import org.ubt.order.common.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,6 +41,9 @@ public class Order {
     @Column
     private String shippingId;
 
+    @Column
+    private String userEmail;
+
     //@Column
     //private User customer;
 
@@ -48,5 +53,7 @@ public class Order {
     @Column
     private double totalPrice;
 
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private List<ProductDTOOrder> orderItems;
 
 }
