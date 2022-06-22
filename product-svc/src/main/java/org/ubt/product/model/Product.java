@@ -1,5 +1,6 @@
 package org.ubt.product.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -112,19 +113,39 @@ public class Product {
 //    @Column
 //    private List<String> reviews;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "inventory_id", referencedColumnName = "id")
-//    private Inventory inventory;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
-//    private WareHouse wareHouse;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "brand_id", referencedColumnName = "id")
-//    private Brand brand;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "order_taking_id", referencedColumnName = "id")
-//    private OrderTaking orderTaking;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_id", referencedColumnName = "id")
+    private Inventory inventory;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
+    private WareHouse wareHouse;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    private Brand brand;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_taking_id", referencedColumnName = "id")
+    private OrderTaking orderTaking;
+
+    @JsonManagedReference
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    @JsonManagedReference
+    public WareHouse getWareHouse() {
+        return wareHouse;
+    }
+
+    @JsonManagedReference
+    public Brand getBrand() {
+        return brand;
+    }
+
+    @JsonManagedReference
+    public OrderTaking getOrderTaking() {
+        return orderTaking;
+    }
 }
