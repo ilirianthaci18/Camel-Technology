@@ -1,5 +1,6 @@
 package org.ubt.profile.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,8 @@ import javax.persistence.*;
 @Table
 public class HistoricalOrder {
     @Id
-    @SequenceGenerator(name="historical_order_sequence",sequenceName = "historical_order_sequence",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "historical_order_sequence")
+    @SequenceGenerator(name = "historical_order_sequence", sequenceName = "historical_order_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "historical_order_sequence")
     @Column
     private int id;
 
@@ -25,6 +26,12 @@ public class HistoricalOrder {
     private String orderType;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @JsonManagedReference
+    public User getUser() {
+        return user;
+    }
+
 }
