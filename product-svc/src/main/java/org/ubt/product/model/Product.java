@@ -49,6 +49,10 @@ public class Product {
 
     @NonNull
     @Column
+    private Integer quantity;
+
+    @NonNull
+    @Column
     private LocalDateTime createdTime;
 
     @NonNull

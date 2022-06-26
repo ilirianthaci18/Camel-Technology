@@ -2,6 +2,7 @@ package org.ubt.product.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table
 public class Inventory {
@@ -20,7 +22,7 @@ public class Inventory {
     @SequenceGenerator(name = "inventory_sequence", sequenceName = "inventory_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventory_sequence")
     @Column
-    private int id;
+    private Long id;
 
     @Column
     private int stockQuantity;

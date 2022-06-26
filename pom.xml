@@ -16,6 +16,7 @@
         <module>eureka-server</module>
         <module>apigateway</module>
         <module>clients</module>
+        <module>calculator-svc</module>
     </modules>
 
     <groupId>org.ubt</groupId>
