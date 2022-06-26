@@ -1,5 +1,6 @@
 package org.ubt.product.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +39,11 @@ public class Inventory {
     @Column
     private String inventoryType;
 
-//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "inventory", fetch = FetchType.LAZY)
-//    private List<Product> productList = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "inventory", fetch = FetchType.LAZY)
+    private List<Product> productList = new ArrayList<>();
+
+    @JsonManagedReference
+    public List<Product> getProductList() {
+        return productList;
+    }
 }
