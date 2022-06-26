@@ -1,6 +1,8 @@
 package org.ubt.product.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table
 public class WareHouse {
@@ -29,6 +32,11 @@ public class WareHouse {
     @Column
     private String wareHouseSerialNumberPalett;
 
-//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "warehouse", fetch = FetchType.LAZY)
-//    private List<Product> productList = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "warehouse", fetch = FetchType.LAZY)
+    private List<Product> productList = new ArrayList<>();
+
+    @JsonManagedReference
+    public List<Product> getProductList() {
+        return productList;
+    }
 }
