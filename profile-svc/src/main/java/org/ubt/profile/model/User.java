@@ -1,8 +1,6 @@
 package org.ubt.profile.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.ubt.profile.common.enums.AccountState;
@@ -14,7 +12,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table
 public class User {
@@ -67,30 +64,4 @@ public class User {
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},mappedBy="user",fetch = FetchType.LAZY)
     private List<HistoricalOrder> historicalOrderList=new ArrayList<>();
-
-    @JsonManagedReference
-    public WishList getWishList() {
-        return wishList;
-    }
-
-    @JsonManagedReference
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    @JsonManagedReference
-    public List<Recommendation> getRecommendationList() {
-        return recommendationList;
-    }
-
-    @JsonManagedReference
-    public List<ShipmentTracking> getShipmentTrackingList() {
-        return shipmentTrackingList;
-    }
-
-    @JsonManagedReference
-    public List<HistoricalOrder> getHistoricalOrderList() {
-        return historicalOrderList;
-    }
-
 }

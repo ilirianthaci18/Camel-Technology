@@ -1,6 +1,5 @@
 package org.ubt.product.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,11 +23,6 @@ public class OrderTaking {
     @Column
     private String status;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "ordertaking", fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
-
-    @JsonManagedReference
-    public List<Product> getProductList() {
-        return productList;
-    }
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "ordertaking", fetch = FetchType.LAZY)
+//    private List<Product> productList = new ArrayList<>();
 }

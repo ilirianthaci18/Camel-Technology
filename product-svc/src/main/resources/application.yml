@@ -24,6 +24,28 @@ spring:
       redis: simple
     .redis:
       time-to-live: 1000S
+
+  #Kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      acks: all
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      sasl:
+        mechanism: PLAIN
+      security:
+        protocol: PLAINTEXT
+
+
 eureka:
   client:
     service-url:
