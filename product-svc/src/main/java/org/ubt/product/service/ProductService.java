@@ -8,6 +8,7 @@ import org.ubt.product.model.Product;
 import java.util.List;
 
 public interface ProductService {
+    void receiveMessage(Object obj);
     List<Product> getProducts() throws InterruptedException;
     void saveProduct(Product product);
     void removeProduct(Long id);

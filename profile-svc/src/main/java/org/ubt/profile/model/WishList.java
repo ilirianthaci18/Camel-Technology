@@ -1,8 +1,6 @@
 package org.ubt.profile.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,13 +9,12 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table
 public class WishList {
     @Id
-    @SequenceGenerator(name = "wishlist_sequence", sequenceName = "wishlist_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wishlist_sequence")
+    @SequenceGenerator(name="wishlist_sequence",sequenceName = "wishlist_sequence",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "wishlist_sequence")
     @Column
     private int id;
 
@@ -33,10 +30,4 @@ public class WishList {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "user_wishlist_id"))
     private User user;
-
-    @JsonManagedReference
-    public User getUser() {
-        return user;
-    }
-
 }

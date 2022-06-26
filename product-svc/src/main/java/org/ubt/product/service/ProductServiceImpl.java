@@ -156,4 +156,10 @@ public class ProductServiceImpl implements ProductService{
     public Product getProductFromCode(String productCode){
         return productRepository.findProductByCode(productCode);
     }
+
+    @Override
+    public void receiveMessage(Object obj) {
+        log.info("Getting kafka messsage in service starting here   ============================== ");
+        log.info(obj.toString());
+    }
 }
