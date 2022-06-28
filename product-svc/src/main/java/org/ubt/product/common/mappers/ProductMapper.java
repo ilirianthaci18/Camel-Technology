@@ -16,10 +16,10 @@ public class ProductMapper {
     public static CartProductDTO toCartProductDTO(Product product) {
         CartProductDTO cartProductDTO = modelMapper.map(product, CartProductDTO.class);
 
-        cartProductDTO.setCode(product.getCode());
-        cartProductDTO.setPrice(product.getPrice());
-        cartProductDTO.setMainImage(product.getMainImage());
-        cartProductDTO.setName(product.getName());
+//        cartProductDTO.setCode(product.getCode());
+//        cartProductDTO.setPrice(product.getPrice());
+//        cartProductDTO.setMainImage(product.getMainImage());
+//        cartProductDTO.setName(product.getName());
 
         return cartProductDTO;
     }
