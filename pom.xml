@@ -17,6 +17,7 @@
         <module>apigateway</module>
         <module>clients</module>
         <module>calculator-svc</module>
+        <module>kafka</module>
     </modules>
 
     <groupId>org.ubt</groupId>
