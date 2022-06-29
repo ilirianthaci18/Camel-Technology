@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InventoryDTO {
-    private int id;
+    private Long id;
 
     private int stockQuantity;
 

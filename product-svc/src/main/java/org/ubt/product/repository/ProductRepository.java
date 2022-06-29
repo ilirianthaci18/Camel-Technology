@@ -16,4 +16,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     @Query("Select product.name From Product product")
     List<String> productName();
+
+    //TODO update
+    @Query(value = "Update product SET quantity = (quantity + 1) where code = :productCode",nativeQuery = true)
+    void decreaseQuantityProductByCode(@Param("productCode") String productCode);
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.User;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.ubt.order.common.dto.ProductDTOOrder;
 import org.ubt.order.common.enums.OrderStatus;
 
 import javax.persistence.*;
@@ -18,13 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table
+@Table(name = "_order")
 public class Order {
     @Id
     @SequenceGenerator(name = "order_sequence", sequenceName = "order_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_sequence")
     @Column
-    private int id;
+    private Long id;
 
     @Column
     private String orderType;
@@ -42,18 +41,20 @@ public class Order {
     private String shippingId;
 
     @Column
-    private String userEmail;
+    private String couponCode;
 
-    //@Column
-    //private User customer;
-
+    @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus status;
 
     @Column
     private double totalPrice;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    private List<ProductDTOOrder> orderItems;
+    @Column
+    private String customerEmail;
 
+    @ElementCollection
+    @CollectionTable(name="product_code",joinColumns =@JoinColumn(name="_order_id"))
+    @Column(name="product_codes")
+    List<String> productCode;
 }
