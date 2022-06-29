@@ -24,7 +24,7 @@ public class OrderTaking {
     @Column
     private String status;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "ordertaking", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "orderTaking", fetch = FetchType.LAZY)
     private List<Product> productList = new ArrayList<>();
 
     @JsonManagedReference

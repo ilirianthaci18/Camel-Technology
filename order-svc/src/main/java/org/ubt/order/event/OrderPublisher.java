@@ -8,7 +8,10 @@ import org.ubt.order.common.dto.PriceCalculationDiscountDTO;
 @Slf4j
 @Component
 public class OrderPublisher {
+    //TODO refactor TOPIC names and methods
     private static final String TOPIC="price-coupon";
+
+    private static final String TOPIC2="product-codes";
 
     private Publisher publisher;
 
@@ -20,5 +23,11 @@ public class OrderPublisher {
         log.info("Producing msg with topic {} and msg {} ",TOPIC,msg);
 
         this.publisher.publishEvent(new ProducerRecord<>(TOPIC,msg));
+    }
+
+    public void publishMsg2(String msg){
+        log.info("Producing msg with topic {} and msg {} ",TOPIC2,msg);
+        this.publisher.publishEvent(new ProducerRecord<>(TOPIC2,msg));
+
     }
 }

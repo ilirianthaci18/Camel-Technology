@@ -32,7 +32,7 @@ public class WareHouse {
     @Column
     private String wareHouseSerialNumberPalett;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "warehouse", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "wareHouse", fetch = FetchType.LAZY)
     private List<Product> productList = new ArrayList<>();
 
     @JsonManagedReference

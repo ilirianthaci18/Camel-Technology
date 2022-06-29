@@ -87,6 +87,7 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findAll();
     }
 
+
     @Override
     @CacheEvict(key="products",value = "Product")
     public void removeProduct(Long id) {
@@ -155,5 +156,18 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product getProductFromCode(String productCode){
         return productRepository.findProductByCode(productCode);
+    }
+
+    @Override
+    public void removeQuantityWhileOrdering(String productCode) {
+        productRepository.decreaseQuantityProductByCode(productCode);
+
+        //Update product SET quantity = (quantity + 1) where code ='IP13P'
+    }
+
+    @Override
+    public void receiveMessage(Object obj) {
+        log.info("Getting kafka messsage in service starting here   ============================== ");
+        log.info(obj.toString());
     }
 }
