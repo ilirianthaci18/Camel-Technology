@@ -12,37 +12,37 @@ import javax.annotation.PostConstruct;
 @Service
 public class DatabaseInitializationImpl implements DatabaseInitialization {
 
-
+    private InventoryService inventoryService;
 
     @PostConstruct
     @Override
     public void initDB() {
-
+        //initializeInventory();
     }
 
-    private void initializeBrands(){
-        Brand brand=new Brand().builder()
+    private void initializeBrands() {
+        Brand brand = new Brand().builder()
                 .name("Apple")
                 .logo("logo.png")
                 .category("Phone")
                 .favorite(true)
                 .build();
 
-        Brand brand2=new Brand().builder()
+        Brand brand2 = new Brand().builder()
                 .name("Samsung")
                 .logo("logo2.png")
                 .category("Phone")
                 .favorite(true)
                 .build();
 
-        Brand brand3=new Brand().builder()
+        Brand brand3 = new Brand().builder()
                 .name("MI")
                 .logo("logo3.png")
                 .category("Phone")
                 .favorite(true)
                 .build();
 
-        Brand brand4=new Brand().builder()
+        Brand brand4 = new Brand().builder()
                 .name("RedDragon")
                 .logo("logo4.png")
                 .category("Laptop")
@@ -51,7 +51,7 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
 
     }
 
-    private void initializeInventory(){
+    private void initializeInventory() {
         Inventory inventory = new Inventory().builder()
                 .stockQuantity(1)
                 .triggerQuantity(1)
@@ -75,9 +75,13 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .inventoryDescription("The total stock available for customers to purchase that can be fulfilled")
                 .inventoryType("Finished Good Inventory")
                 .build();
+
+        inventoryService.saveInventory(inventory);
+        inventoryService.saveInventory(inventory2);
+        inventoryService.saveInventory(inventory3);
     }
 
-    private void initializeWareHouse(){
+    private void initializeWareHouse() {
         WareHouse wareHouse = new WareHouse().builder()
                 .RFID(true)
                 .wareHouseLocation("Europe")

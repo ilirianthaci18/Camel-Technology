@@ -27,33 +27,48 @@ public class ProductController {
     }
 
     @GetMapping("/names")
-    public List<String> productNames(){
+    public List<String> productNames() {
         return productService.getProductNames();
     }
 
     @DeleteMapping("/{id}")
-    public void removeProduct(@PathVariable Long id){
+    public void removeProduct(@PathVariable Long id) {
         productService.removeProduct(id);
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id){
+    public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
     @PutMapping()
-    public Product updateProduct(@RequestBody Product product){
+    public Product updateProduct(@RequestBody Product product) {
         return productService.updateProduct(product);
     }
 
     @PostMapping("/pagination")
-    public ResponseEntity<PaginatedResponse<Product>> getProducts(@RequestBody PaginationRequest paginationRequest){
+    public ResponseEntity<PaginatedResponse<Product>> getProducts(@RequestBody PaginationRequest paginationRequest) {
         return ResponseEntity.ok(productService.paginatedProducts(paginationRequest));
     }
 
     @GetMapping("/getProductByCode/{productCode}")
-    public CartProductDTO getProductByCode(@PathVariable String productCode){
+    public CartProductDTO getProductByCode(@PathVariable String productCode) {
         return productService.getProductByCode(productCode);
+    }
+
+    @PostMapping("/{wareHouseId}/product/{productId}")
+    public void addProductToWareHouse(@PathVariable int wareHouseId, @PathVariable Long productId) {
+        productService.addProductToWareHouse(wareHouseId, productId);
+    }
+
+    @PostMapping("/{brandId}/product/{productId}")
+    public void addProductToBrand(@PathVariable int brandId, @PathVariable Long productId) {
+        productService.addProductToBrand(brandId, productId);
+    }
+
+    @PostMapping("/{orderTakingId}/product/{productId}")
+    public void addProductToOrderTaking(@PathVariable int orderTakingId, @PathVariable Long productId) {
+        productService.addProductToOrderTaking(orderTakingId, productId);
     }
 }
 
