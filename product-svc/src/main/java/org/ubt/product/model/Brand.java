@@ -52,4 +52,11 @@ public class Brand {
     public List<Product> getProductList() {
         return productList;
     }
+
+    public void addProduct(Product product) {
+        if (!productList.contains(product)) {
+            productList.add(product);
+            product.setBrand(this);
+        }
+    }
 }
