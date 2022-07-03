@@ -1,41 +1,29 @@
 package org.ubt.chat.model;
 
 
-import jdk.jshell.Snippet;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table
 public class Message {
-    @Id
-    @SequenceGenerator(name = "message_sequence", sequenceName = "message_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_sequence")
-    @Column
-    private long id;
 
-    @Column
-    public String content;
+    private String message;
 
-    @Column
-    public LocalDateTime timeStamp;
+    public Message() {
 
-    @Column
-    public int userId;
+    }
 
-    @Column
-    public int conversationId;
+    public Message(String message) {
+        this.message = message;
+    }
 
-    @Column
-    public String link;
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
+    @Override
+    public String toString() {
+        return String.format("Model [message=%s]", message);
+    }
 
 }
