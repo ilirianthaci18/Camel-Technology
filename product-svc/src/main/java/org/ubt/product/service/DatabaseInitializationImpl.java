@@ -4,15 +4,22 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ubt.product.model.Brand;
 import org.ubt.product.model.Inventory;
+import org.ubt.product.model.Product;
 import org.ubt.product.model.WareHouse;
+import org.ubt.product.repository.BrandRepository;
+import org.ubt.product.repository.WareHouseRepository;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class DatabaseInitializationImpl implements DatabaseInitialization {
 
     private InventoryService inventoryService;
+    private BrandRepository brandRepository;
+    private WareHouseRepository wareHouseRepository;
 
     @PostConstruct
     @Override
@@ -49,6 +56,12 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .favorite(true)
                 .build();
 
+
+        List<Brand> brands=new ArrayList<>();
+        brands.add(brand);
+        brands.add(brand2);
+        brands.add(brand3);
+//        Iterable<Brand> brandss=brandRepository.saveAll(brands);
     }
 
     private void initializeInventory() {
@@ -76,9 +89,9 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .inventoryType("Finished Good Inventory")
                 .build();
 
-        inventoryService.saveInventory(inventory);
-        inventoryService.saveInventory(inventory2);
-        inventoryService.saveInventory(inventory3);
+//        inventoryService.saveInventory(inventory);
+//        inventoryService.saveInventory(inventory2);
+//        inventoryService.saveInventory(inventory3);
     }
 
     private void initializeWareHouse() {
@@ -105,5 +118,13 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .wareHouseLocation("America")
                 .wareHouseSerialNumberPalett("STL0044")
                 .build();
+
+        List<WareHouse> wareHouses=new ArrayList<>();
+        wareHouses.add(wareHouse);
+        wareHouses.add(wareHouse2);
+        wareHouses.add(wareHouse3);
+        wareHouses.add(wareHouse4);
+
+//        Iterable<WareHouse> wareHouses1=wareHouseRepository.saveAll(wareHouses);
     }
 }
