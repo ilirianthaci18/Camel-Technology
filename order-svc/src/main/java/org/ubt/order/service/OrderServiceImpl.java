@@ -8,6 +8,7 @@ import org.ubt.order.common.enums.OrderStatus;
 import org.ubt.order.event.OrderPublisher;
 import org.ubt.order.model.Coupon;
 import org.ubt.order.model.Order;
+import org.ubt.order.model.OrderStatusDTO;
 import org.ubt.order.repository.CouponRepository;
 import org.ubt.order.repository.OrderRepository;
 
@@ -97,5 +98,20 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(orderFromDB.get());
 
         log.info("Update order {} , status to {}",order.getId(),orderFromDB.get().getStatus());
+    }
+
+    @Override
+    public void updateOrder(OrderStatusDTO orderStatusDTO) {
+        if(orderStatusDTO.isStatus()){
+            orderStatusDTO.getProductCodes().forEach(prdoct-> System.out.println(prdoct));
+            log.info(orderStatusDTO.getOrderId());
+            //send email and notification
+            //make the order as delivery , add that delivery to logistics , and from logistics assign the delivery to a courier
+            //save the order in postgresql with businesskey email , status , total price , photo of product , product name.
+        }else{
+            //here we should get the order_id from stripe controller , and if cancel\
+            //get the savedorder to redis with order_id and get the decrement number and increment that shit
+            //and delete the order from redis
+        }
     }
 }

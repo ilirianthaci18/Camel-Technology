@@ -44,35 +44,35 @@ public class ProductServiceImpl implements ProductService {
     @PostConstruct
     public void init() {
         Product iphone = new Product("Iphone 13 Pro", "IP13P", "Newest iPhone is now live with us",
-                "New Brand Iphone", "Battery", "assets/images/2.png", 5, LocalDateTime.now(), true, true, 1350.00, 12, "Mobiles", "Sierra Blue", 2.53, 203, 5.78, 1.7, true, 4.5, 1);
+                "New Brand Iphone", "Battery", "assets/images/2.png", 9999, LocalDateTime.now(), true, true, 1350.00, 12, "Mobiles", "Sierra Blue", 2.53, 203, 5.78, 1.7, true, 4.5, 9999);
 
-        Product samsung = new Product("Samsung S22 Ultra", "SMS22U", "Newest product of Samsung", "New Brand", "batterytest", "assets/images/3.png", 5,
+        Product samsung = new Product("Samsung S22 Ultra", "SMS22U", "Newest product of Samsung", "New Brand", "batterytest", "assets/images/3.png", 9999,
                 LocalDateTime.now(), true, true, 1200,
-                15, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 1);
+                15, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 9999);
 
-        Product watch = new Product("Apple Watch Series 7", "AW7", "Newest product of apple watches", "New Brand", "800MAH", "assets/images/1.png", 5,
+        Product watch = new Product("Apple Watch Series 7", "AW7", "Newest product of apple watches", "New Brand", "800MAH", "assets/images/1.png", 9999,
                 LocalDateTime.now(), true, true, 1200,
-                15, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 7);
+                15, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 9999);
 
-        Product iphone13 = new Product("iPhone13", "IP13", "Newest product of mobile phones from apple", "New Brand", "2800MAH", "assets/images/4.png", 5,
+        Product iphone13 = new Product("iPhone13", "IP13", "Newest product of mobile phones from apple", "New Brand", "2800MAH", "assets/images/4.png", 9999,
                 LocalDateTime.now(), true, false, 999.99,
                 10, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 10);
 
-        Product iphone12 = new Product("iPhone12", "IP12", "Newest product of mobile phones from apple", "New Brand", "1800MAH", "assets/images/6.png", 5,
+        Product iphone12 = new Product("iPhone12", "IP12", "Newest product of mobile phones from apple", "New Brand", "1800MAH", "assets/images/6.png", 9999,
                 LocalDateTime.now(), true, false, 799.99,
-                10, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 9);
+                10, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 9999);
 
-        Product galaxyTab = new Product("Galaxy Tab A8", "IP13", "Newest product of mobile phones from Samsung", "New Brand", "2800MAH", "assets/images/12.png", 5,
+        Product galaxyTab = new Product("Galaxy Tab A8", "IP13", "Newest product of mobile phones from Samsung", "New Brand", "2800MAH", "assets/images/12.png", 9999,
                 LocalDateTime.now(), true, false, 999.99,
-                10, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 5);
+                10, "Mobiles", "White", 2.53, 200, 5.83, 2.4, true, 4.4, 9999);
 
-        Product mouse = new Product("Gaming Mouse", "GM1", "Newest product of gaming accessories", "New Brand", "280MAH", "assets/images/15.png", 5,
+        Product mouse = new Product("Gaming Mouse", "GM1", "Newest product of gaming accessories", "New Brand", "280MAH", "assets/images/15.png", 9999,
                 LocalDateTime.now(), true, false, 99.99,
-                10, "Gaming", "Black", 2.53, 200, 5.83, 2.4, true, 4.4, 5);
+                10, "Gaming", "Black", 2.53, 200, 5.83, 2.4, true, 4.4, 9999);
 
-        Product iphone11 = new Product("Iphone11", "IP11", "Newest product of apple", "New Brand", "280MAH", "assets/images/6.png", 5,
+        Product iphone11 = new Product("Iphone11", "IP11", "Newest product of apple", "New Brand", "280MAH", "assets/images/6.png", 9999,
                 LocalDateTime.now(), true, false, 99.99,
-                10, "Mobiles", "Blue", 2.53, 200, 5.83, 2.4, true, 4.4, 5);
+                10, "Mobiles", "Blue", 2.53, 200, 5.83, 2.4, true, 4.4, 9999);
 
 
         List<Product> products = new ArrayList<>();
@@ -87,11 +87,12 @@ public class ProductServiceImpl implements ProductService {
         products.add(iphone11);
 
 
-        //Iterable<Product> products1 = productRepository.saveAll(products);
+//        Iterable<Product> products1 = productRepository.saveAll(products);
     }
 
     @Cacheable(key = "products", value = "Product")
     public List<Product> getProducts() throws InterruptedException {
+        //refactor use redis stack
         log.info("Calling service to get Products data...");
         log.debug("This is debug Calling service to get Products data...");
         return productRepository.findAll();
@@ -101,6 +102,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @CacheEvict(key = "products", value = "Product")
     public void removeProduct(Long id) {
+        //refactor use redis stack
         log.info("Removing product with id " + id);
         productRepository.delete(productRepository.getById(id));
     }
@@ -264,6 +266,5 @@ public class ProductServiceImpl implements ProductService {
 
         log.info("OrderTaking has a product ", orderTaking, product);
     }
-
 
 }

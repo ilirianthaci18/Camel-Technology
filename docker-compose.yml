@@ -1,4 +1,4 @@
-version: '2'
+version: '2.4'
 
 services:
   #  postgres:
@@ -31,11 +31,13 @@ services:
   #    restart: unless-stopped
   zipkin:
     image: openzipkin/zipkin
+    platform: 'linux/amd64'
     container_name: zipkin
     ports:
       - "9411:9411"
   redis-stack:
     image: redis/redis-stack:latest
+    platform: 'linux/amd64'
     container_name: redis-stack
     volumes:
       - redis-data:/data/redis
@@ -45,6 +47,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.1.1
+    platform: 'linux/amd64'
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -55,6 +58,7 @@ services:
 
   broker:
     image: confluentinc/cp-server:7.1.1
+    platform: 'linux/amd64'
     hostname: broker
     container_name: broker
     depends_on:
@@ -82,57 +86,60 @@ services:
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:7.1.1
-    hostname: schema-registry
-    container_name: schema-registry
-    depends_on:
-      - broker
-    ports:
-      - "8081:8081"
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
-      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+#  schema-registry:
+#    image: confluentinc/cp-schema-registry:7.1.1
+#    platform: 'linux/amd64'
+#    hostname: schema-registry
+#    container_name: schema-registry
+#    depends_on:
+#      - broker
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+#      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
+#      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
 
-  connect:
-    image: cnfldemos/cp-server-connect-datagen:0.5.3-7.1.0
-    hostname: connect
-    container_name: connect
-    depends_on:
-      - broker
-      - schema-registry
-    ports:
-      - "8083:8083"
-    environment:
-      CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
-      CONNECT_REST_ADVERTISED_HOST_NAME: connect
-      CONNECT_GROUP_ID: compose-connect-group
-      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
-      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
-      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
-      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
-      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      # CLASSPATH required due to CC-2422
-      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-7.1.1.jar
-      CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
-      CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
-      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
-      CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+#  connect:
+#    image: cnfldemos/cp-server-connect-datagen:0.5.3-7.1.0
+#    platform: 'linux/amd64'
+#    hostname: connect
+#    container_name: connect
+#    depends_on:
+#      - broker
+#      - schema-registry
+#    ports:
+#      - "8083:8083"
+#    environment:
+#      CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
+#      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+#      CONNECT_GROUP_ID: compose-connect-group
+#      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+#      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+#      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
+#      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+#      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+#      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+#      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+#      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+#      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+#      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+#      # CLASSPATH required due to CC-2422
+#      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-7.1.1.jar
+#      CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+#      CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+#      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+#      CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:7.1.1
+    platform: 'linux/amd64'
     hostname: control-center
     container_name: control-center
     depends_on:
       - broker
       - schema-registry
-      - connect
+#      - connect
     #      - ksqldb-server
     ports:
       - "9021:9021"
