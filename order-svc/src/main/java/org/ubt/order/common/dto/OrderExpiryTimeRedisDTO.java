@@ -25,4 +25,6 @@ public class OrderExpiryTimeRedisDTO {
     private String customerEmail;
 
     List<String> productCode;
+
+    private Long quantity;
 }
