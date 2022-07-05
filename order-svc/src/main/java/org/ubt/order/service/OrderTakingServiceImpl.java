@@ -30,21 +30,20 @@ public class OrderTakingServiceImpl implements OrderTakingService {
     }
 
     //TODO refactor
+
     @Override
     public void saveOrderToRedis(CheckoutPayment payment, String id) {
         //here accept new order
         //and make it set the order_id to the order.
+
         OrderExpiryTimeRedisDTO orderExpiryTimeRedisDTO=new OrderExpiryTimeRedisDTO(id,
-                LocalDateTime.now(),LocalDateTime.now().plusMinutes(5),payment.getAmount(),"test",payment.getProductCode());
+                LocalDateTime.now(),LocalDateTime.now().plusMinutes(5),payment.getAmount()/100,"test",payment.getProductCode(),payment.getQuantity());
 
         log.info("Saving order to redis , order => {} ",orderExpiryTimeRedisDTO.toString());
         redisJSON.set(String.valueOf(orderExpiryTimeRedisDTO.getId()), SetArgs.Builder.create(".", GsonUtils.toJson(orderExpiryTimeRedisDTO)));
+
         sendProductCodesToProduct(orderExpiryTimeRedisDTO.getProductCode());
         log.info("Order with id {} , saved in REDIS ",orderExpiryTimeRedisDTO.getId());
-
-
-
-
 
 
 //        OrderExpiryTimeRedisDTO orderExpiryTimeRedisDTO = toOrderForRedis(order);

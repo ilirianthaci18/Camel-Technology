@@ -1,11 +1,14 @@
 package org.ubt.mail.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.ubt.mail.common.dto.OrderEmailDTO;
 import org.ubt.mail.model.EmailDetails;
 
 import javax.mail.MessagingException;
@@ -14,6 +17,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class EmailServiceImpl implements EmailService{
     private JavaMailSender javaMailSender;
@@ -70,5 +74,15 @@ public class EmailServiceImpl implements EmailService{
     @Override
     public void sendTemplatedMail(String from, List<String> to, String subject, String templateName, Map<String, Object> templateData, String attachmentName) {
 
+    }
+
+    @Override
+    public void receiveMsgToKafka(Object obj) {
+        log.info("Msg been received "+obj);
+
+        ModelMapper modelMapper =new org.modelmapper.ModelMapper();
+        OrderEmailDTO orderEmailDTO=modelMapper.map(obj,OrderEmailDTO.class);
+        obj.getClass().get
+        log.info("this is it baby ! {} ",orderEmailDTO);
     }
 }

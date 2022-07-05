@@ -10,4 +10,6 @@ public interface EmailService {
     String sendMailWithAttachment(EmailDetails details);
     void sendTemplatedMail(String from, List<String> to, String subject, String templateName, Map<String , Object> templateData,
                            String attachmentName);
+
+    void receiveMsgToKafka(Object obj);
 }

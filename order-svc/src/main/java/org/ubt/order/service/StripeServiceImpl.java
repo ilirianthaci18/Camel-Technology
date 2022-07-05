@@ -32,6 +32,7 @@ public class StripeServiceImpl implements StripeService{
     public String paymentWithCheckoutPage(CheckoutPayment payment) {
         //here accept new order
         //and make it set the order_id to the order.
+
         Stripe.apiKey="sk_test_51LG794BowmVXS0dTPAbsZKN47mAGKcVOvo3fPkrp8semtVQykqO2NbJHkbuumpPKs8xuHq5CpEj5y2h2HvsFoMWJ00RNGD6tAU";
         SessionCreateParams params = SessionCreateParams.builder()
                 // We will use the credit card payment method
@@ -52,6 +53,7 @@ public class StripeServiceImpl implements StripeService{
         // create a stripe session
         Session session = Session.create(params);
         Map<String, String> responseData = new HashMap<>();
+        payment.getProductCode().forEach(product -> log.info(product));
         // We get the sessionId and we putted inside the response data you can get more info from the session object
         responseData.put("id", session.getId());
         //save this order to redis
