@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,4 +19,5 @@ public class CheckoutPayment {
     private String cancelUrl;
     private long amount;
     private long quantity;
+    List<String> productCode;
 }

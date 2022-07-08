@@ -37,6 +37,9 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
+        JsonDeserializer<Object> deserializer = new JsonDeserializer<>(Object.class);
+
+//        deserializer.addTrustedPackages("*");
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
@@ -44,6 +47,7 @@ public class KafkaConfig {
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "java.lang.Object");
         props.put(JsonDeserializer.TRUSTED_PACKAGES, '*');
 
+//        return new DefaultKafkaConsumerFactory<>(props,new StringDeserializer(),deserializer);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 

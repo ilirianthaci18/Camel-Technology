@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.User;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.ubt.order.common.enums.OrderStatus;
 
@@ -20,10 +21,10 @@ import java.util.List;
 @Table(name = "_order")
 public class Order {
     @Id
-    @SequenceGenerator(name = "order_sequence", sequenceName = "order_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_sequence")
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column
-    private Long id;
+    private String id;
 
     @Column
     private String orderType;

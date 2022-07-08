@@ -4,54 +4,67 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ubt.product.model.Brand;
 import org.ubt.product.model.Inventory;
+import org.ubt.product.model.Product;
 import org.ubt.product.model.WareHouse;
+import org.ubt.product.repository.BrandRepository;
+import org.ubt.product.repository.WareHouseRepository;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class DatabaseInitializationImpl implements DatabaseInitialization {
 
-
+    private InventoryService inventoryService;
+    private BrandRepository brandRepository;
+    private WareHouseRepository wareHouseRepository;
 
     @PostConstruct
     @Override
     public void initDB() {
-
+        //initializeInventory();
     }
 
-    private void initializeBrands(){
-        Brand brand=new Brand().builder()
+    private void initializeBrands() {
+        Brand brand = new Brand().builder()
                 .name("Apple")
                 .logo("logo.png")
                 .category("Phone")
                 .favorite(true)
                 .build();
 
-        Brand brand2=new Brand().builder()
+        Brand brand2 = new Brand().builder()
                 .name("Samsung")
                 .logo("logo2.png")
                 .category("Phone")
                 .favorite(true)
                 .build();
 
-        Brand brand3=new Brand().builder()
+        Brand brand3 = new Brand().builder()
                 .name("MI")
                 .logo("logo3.png")
                 .category("Phone")
                 .favorite(true)
                 .build();
 
-        Brand brand4=new Brand().builder()
+        Brand brand4 = new Brand().builder()
                 .name("RedDragon")
                 .logo("logo4.png")
                 .category("Laptop")
                 .favorite(true)
                 .build();
 
+
+        List<Brand> brands=new ArrayList<>();
+        brands.add(brand);
+        brands.add(brand2);
+        brands.add(brand3);
+//        Iterable<Brand> brandss=brandRepository.saveAll(brands);
     }
 
-    private void initializeInventory(){
+    private void initializeInventory() {
         Inventory inventory = new Inventory().builder()
                 .stockQuantity(1)
                 .triggerQuantity(1)
@@ -75,9 +88,13 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .inventoryDescription("The total stock available for customers to purchase that can be fulfilled")
                 .inventoryType("Finished Good Inventory")
                 .build();
+
+//        inventoryService.saveInventory(inventory);
+//        inventoryService.saveInventory(inventory2);
+//        inventoryService.saveInventory(inventory3);
     }
 
-    private void initializeWareHouse(){
+    private void initializeWareHouse() {
         WareHouse wareHouse = new WareHouse().builder()
                 .RFID(true)
                 .wareHouseLocation("Europe")
@@ -101,5 +118,13 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .wareHouseLocation("America")
                 .wareHouseSerialNumberPalett("STL0044")
                 .build();
+
+        List<WareHouse> wareHouses=new ArrayList<>();
+        wareHouses.add(wareHouse);
+        wareHouses.add(wareHouse2);
+        wareHouses.add(wareHouse3);
+        wareHouses.add(wareHouse4);
+
+//        Iterable<WareHouse> wareHouses1=wareHouseRepository.saveAll(wareHouses);
     }
 }

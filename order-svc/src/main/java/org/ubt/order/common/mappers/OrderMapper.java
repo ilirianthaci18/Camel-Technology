@@ -2,6 +2,7 @@ package org.ubt.order.common.mappers;
 
 
 import org.modelmapper.ModelMapper;
+import org.ubt.order.common.dto.OrderEmailDTO;
 import org.ubt.order.common.dto.OrderExpiryTimeRedisDTO;
 import org.ubt.order.model.Order;
 
@@ -19,5 +20,18 @@ public class OrderMapper {
         orderExpiryTimeRedisDTO.setProductCode(order.getProductCode());
 
         return orderExpiryTimeRedisDTO;
+    }
+
+    public static OrderEmailDTO toOrderEmailDTO(Order order){
+        OrderEmailDTO orderEmailDTO=modelMapper.map(order,OrderEmailDTO.class);
+
+        orderEmailDTO.setEmail(order.getCustomerEmail());
+        orderEmailDTO.setShip_to(order.getShip_to());
+        orderEmailDTO.setOrderStatus(order.getStatus().toString());
+        orderEmailDTO.setTotalPrice(order.getTotalPrice());
+        orderEmailDTO.setOrdered(order.getOrdered());
+        orderEmailDTO.setShipped(order.getShipped());
+
+        return orderEmailDTO;
     }
 }

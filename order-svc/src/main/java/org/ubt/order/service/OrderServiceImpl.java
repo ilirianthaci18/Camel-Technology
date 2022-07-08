@@ -1,18 +1,26 @@
 package org.ubt.order.service;
 
+import io.github.dengliming.redismodule.redisjson.RedisJSON;
+import io.github.dengliming.redismodule.redisjson.args.GetArgs;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
+import org.ubt.order.common.dto.OrderExpiryTimeRedisDTO;
 import org.ubt.order.common.dto.PriceCalculationDiscountDTO;
 import org.ubt.order.common.enums.OrderStatus;
 import org.ubt.order.event.OrderPublisher;
 import org.ubt.order.model.Coupon;
 import org.ubt.order.model.Order;
+import org.ubt.order.model.OrderStatusDTO;
 import org.ubt.order.repository.CouponRepository;
 import org.ubt.order.repository.OrderRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static org.ubt.order.common.mappers.OrderMapper.toOrderEmailDTO;
 
 @Slf4j
 @Service
@@ -20,12 +28,17 @@ public class OrderServiceImpl implements OrderService{
     private OrderRepository orderRepository;
     private CouponRepository couponRepository;
     private OrderPublisher orderPublisher;
+
+    private DeliveryService deliveryService;
+    private RedisJSON redisJSON;
+
     private double calculatedPrice=0.0;
 
-    public OrderServiceImpl(OrderRepository orderRepository, CouponRepository couponRepository, OrderPublisher orderPublisher) {
+    public OrderServiceImpl(OrderRepository orderRepository, CouponRepository couponRepository, OrderPublisher orderPublisher, RedisJSON redisJSON) {
         this.orderRepository = orderRepository;
         this.couponRepository = couponRepository;
         this.orderPublisher = orderPublisher;
+        this.redisJSON = redisJSON;
     }
 
     @SneakyThrows
@@ -97,5 +110,38 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(orderFromDB.get());
 
         log.info("Update order {} , status to {}",order.getId(),orderFromDB.get().getStatus());
+    }
+
+    @Override
+    public void updateOrder(OrderStatusDTO orderStatusDTO) {
+        if(orderStatusDTO.isStatus()){
+            OrderExpiryTimeRedisDTO orderExpiryTimeRedisDTO=redisJSON.get(orderStatusDTO.getOrderId(),OrderExpiryTimeRedisDTO.class,new GetArgs().path(".").indent("\t").newLine("\n").space(" "));
+            log.info(orderStatusDTO.getOrderId());
+            //send email and notification
+            //make the order as delivery , add that delivery to logistics , and from logistics assign the delivery to a courier
+            //save the order in postgresql with businesskey email , status , total price , photo of product , product name.
+            Order order=new Order(orderStatusDTO.getOrderId(),"payment", LocalDateTime.now(),LocalDateTime.now().plusDays(1L)
+                    ,orderStatusDTO.getShipTo(),"#shpcmt"+orderStatusDTO.getOrderId(),"test",OrderStatus.NEW,orderExpiryTimeRedisDTO.getTotalPrice(),
+                    orderExpiryTimeRedisDTO.getCustomerEmail(),orderExpiryTimeRedisDTO.getProductCode());
+            log.info("this is msg ::  {}",order);
+            orderRepository.save(order);
+            log.info("this skipped order save repo ");
+//            deliveryService.acceptDelivery(order);
+            log.info("this skipped accept delivery");
+            orderPublisher.publishOrderToEmail(toOrderEmailDTO(order));
+            log.info("this skipped email publish");
+            redisJSON.del(orderExpiryTimeRedisDTO.getId(),".");
+        }else{
+            OrderExpiryTimeRedisDTO orderExpiryTimeRedisDTO=redisJSON.get(orderStatusDTO.getOrderId(),OrderExpiryTimeRedisDTO.class,new GetArgs().path(".").indent("\t").newLine("\n").space(" "));
+            Long incrementNum=orderExpiryTimeRedisDTO.getQuantity();
+
+            log.info("This is the inc num {}",incrementNum);
+            redisJSON.del(orderExpiryTimeRedisDTO.getId(),".");
+            //here we should get the order_id from stripe controller , and if cancel\
+            //get the savedorder to redis with order_id and get the decrement number and increment that shit
+            //and delete the order from redis
+
+            //problem how to know which productCode the quantity ... ?
+        }
     }
 }

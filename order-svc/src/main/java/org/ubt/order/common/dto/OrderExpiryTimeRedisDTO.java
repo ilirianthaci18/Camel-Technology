@@ -1,6 +1,7 @@
 package org.ubt.order.common.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class OrderExpiryTimeRedisDTO {
 
-    private Long id;
+    private String id;
 
     private LocalDateTime ordered;
 
@@ -23,4 +25,6 @@ public class OrderExpiryTimeRedisDTO {
     private String customerEmail;
 
     List<String> productCode;
+
+    private Long quantity;
 }
