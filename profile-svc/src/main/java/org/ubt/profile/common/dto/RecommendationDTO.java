@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecommendationDTO {
-    private int id;
+    private Long id;
 
     private boolean notInterested;
 

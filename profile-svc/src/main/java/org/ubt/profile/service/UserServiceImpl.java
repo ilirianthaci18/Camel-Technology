@@ -1,5 +1,6 @@
 package org.ubt.profile.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +18,7 @@ import org.ubt.profile.repository.UserRepository;
 import java.util.List;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -25,10 +27,6 @@ public class UserServiceImpl implements UserService {
     private ShipmentTrackingRepository shipmentTrackingRepository;
     private HistoricalOrderRepository historicalOrderRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     public List<User> getUsers() throws InterruptedException {
         log.info("Calling service to get Users data...");
         log.debug("This is debug Calling service to get Users data...");
@@ -36,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(int id) {
+    public void removeUser(Long id) {
         log.info("Removing user with id " + id);
         userRepository.delete(userRepository.getById(id));
     }
@@ -53,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> {
             log.error("User could not be found , id : ", id);
             return new NotFoundException("User with id " + id + "not found");
@@ -61,14 +59,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addRecommendationToUser(int userId, int recommendationId) {
+    public void addRecommendationToUser(Long userId, int recommendationId) {
         User user = getUserById(userId);
         Recommendation recommendation = recommendationRepository.findById(recommendationId).orElseThrow(() -> {
             log.error("Recommendation could not be found , id : ", recommendationId);
             return new NotFoundException("Recommendation with id " + recommendationId + "not found");
         });
 
-        user.addRecommendation(recommendation);
+//        user.addRecommendation(recommendation);
 
         saveUser(user);
 
@@ -76,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addShipmentTrackingToUser(int userId, int shipmentTrackingId) {
+    public void addShipmentTrackingToUser(Long userId, int shipmentTrackingId) {
         User user = getUserById(userId);
         ShipmentTracking shipmentTracking = shipmentTrackingRepository.findById(shipmentTrackingId).orElseThrow(() -> {
             log.error("ShipmentTracking could not be found , id : ", shipmentTrackingId);
@@ -91,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addHistoricalOrderToUser(int userId, int historicalOrderId) {
+    public void addHistoricalOrderToUser(Long userId, int historicalOrderId) {
         User user = getUserById(userId);
         HistoricalOrder historicalOrder = historicalOrderRepository.findById(historicalOrderId).orElseThrow(() -> {
             log.error("HistoricalOrder could not be found , id : ", historicalOrderId);

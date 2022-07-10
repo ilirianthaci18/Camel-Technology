@@ -37,7 +37,6 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
-        JsonDeserializer<Object> deserializer = new JsonDeserializer<>(Object.class);
 
 //        deserializer.addTrustedPackages("*");
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -47,10 +46,8 @@ public class KafkaConfig {
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "java.lang.Object");
         props.put(JsonDeserializer.TRUSTED_PACKAGES, '*');
 
-//        return new DefaultKafkaConsumerFactory<>(props,new StringDeserializer(),deserializer);
         return new DefaultKafkaConsumerFactory<>(props);
     }
-
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {

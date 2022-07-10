@@ -17,5 +17,5 @@ public class OrderStatusDTO {
     private String shipTo;
     private List<String> productCodes;
     private boolean status;
-//    private String customerEmail;
+    private String customerEmail;
 }

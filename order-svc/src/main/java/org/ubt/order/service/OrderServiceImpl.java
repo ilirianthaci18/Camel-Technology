@@ -2,13 +2,16 @@ package org.ubt.order.service;
 
 import io.github.dengliming.redismodule.redisjson.RedisJSON;
 import io.github.dengliming.redismodule.redisjson.args.GetArgs;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
+import org.ubt.order.common.dto.OrderEmailDTO;
 import org.ubt.order.common.dto.OrderExpiryTimeRedisDTO;
 import org.ubt.order.common.dto.PriceCalculationDiscountDTO;
 import org.ubt.order.common.enums.OrderStatus;
+import org.ubt.order.common.security.AuthUserService;
 import org.ubt.order.event.OrderPublisher;
 import org.ubt.order.model.Coupon;
 import org.ubt.order.model.Order;
@@ -24,6 +27,7 @@ import static org.ubt.order.common.mappers.OrderMapper.toOrderEmailDTO;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class OrderServiceImpl implements OrderService{
     private OrderRepository orderRepository;
     private CouponRepository couponRepository;
@@ -32,14 +36,7 @@ public class OrderServiceImpl implements OrderService{
     private DeliveryService deliveryService;
     private RedisJSON redisJSON;
 
-    private double calculatedPrice=0.0;
-
-    public OrderServiceImpl(OrderRepository orderRepository, CouponRepository couponRepository, OrderPublisher orderPublisher, RedisJSON redisJSON) {
-        this.orderRepository = orderRepository;
-        this.couponRepository = couponRepository;
-        this.orderPublisher = orderPublisher;
-        this.redisJSON = redisJSON;
-    }
+    private AuthUserService authUserService;
 
     @SneakyThrows
     @Override
@@ -54,6 +51,7 @@ public class OrderServiceImpl implements OrderService{
             e.printStackTrace();
         }
 
+        //here we should use sync
         orderPublisher.publishMsg(new PriceCalculationDiscountDTO(order.getTotalPrice(),order.getCouponCode(),couponDiscountPerc));
         Thread.sleep(1000);
 //        TODO this calculatedPrice should happend in calculator-svc
@@ -75,7 +73,7 @@ public class OrderServiceImpl implements OrderService{
 //        log.info("This is the ifnal price {} from value ",val);
         //TODO Unparseable number: ""918.0""l
 //        NumberFormat nf = NumberFormat.getInstance();
-//        double number = nf.parse(finalPrice).doubleValue();
+//        double number = nf.parse(finalPrice).doubleValue();F
 //        this.calculatedPrice=number;
     }
 
@@ -117,6 +115,7 @@ public class OrderServiceImpl implements OrderService{
         if(orderStatusDTO.isStatus()){
             OrderExpiryTimeRedisDTO orderExpiryTimeRedisDTO=redisJSON.get(orderStatusDTO.getOrderId(),OrderExpiryTimeRedisDTO.class,new GetArgs().path(".").indent("\t").newLine("\n").space(" "));
             log.info(orderStatusDTO.getOrderId());
+            orderExpiryTimeRedisDTO.setCustomerEmail(authUserService.getEmail());
             //send email and notification
             //make the order as delivery , add that delivery to logistics , and from logistics assign the delivery to a courier
             //save the order in postgresql with businesskey email , status , total price , photo of product , product name.
@@ -124,6 +123,8 @@ public class OrderServiceImpl implements OrderService{
                     ,orderStatusDTO.getShipTo(),"#shpcmt"+orderStatusDTO.getOrderId(),"test",OrderStatus.NEW,orderExpiryTimeRedisDTO.getTotalPrice(),
                     orderExpiryTimeRedisDTO.getCustomerEmail(),orderExpiryTimeRedisDTO.getProductCode());
             log.info("this is msg ::  {}",order);
+            order.setCustomerEmail(authUserService.getEmail());
+            String email = authUserService.getEmail();
             orderRepository.save(order);
             log.info("this skipped order save repo ");
 //            deliveryService.acceptDelivery(order);

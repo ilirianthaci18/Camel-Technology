@@ -1,5 +1,6 @@
 package org.ubt.product.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.ubt.clients.product.dto.CartProductDTO;
 import org.ubt.product.common.dto.PaginatedResponse;
 import org.ubt.product.common.dto.PaginationRequest;
+import org.ubt.product.common.dto.WishListProductDTO;
 import org.ubt.product.common.mappers.PaginationMapper;
+import org.ubt.product.event.ProductPublisher;
 import org.ubt.product.exception.NotFoundException;
 import org.ubt.product.model.Brand;
 import org.ubt.product.model.OrderTaking;
@@ -23,11 +26,14 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.ubt.product.common.mappers.ProductMapper.toCartProductDTO;
+import static org.ubt.product.common.mappers.ProductMapper.wishListProductDTO;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
@@ -35,11 +41,7 @@ public class ProductServiceImpl implements ProductService {
     private WareHouseRepository wareHouseRepository;
     private BrandRepository brandRepository;
     private OrderTakingRepository orderTakingRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository, PaginationMapper paginationMapper) {
-        this.productRepository = productRepository;
-        this.paginationMapper = paginationMapper;
-    }
+    private ProductPublisher publisher;
 
     @PostConstruct
     public void init() {
@@ -110,6 +112,29 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveProduct(Product product) {
         productRepository.save(product);
+    }
+
+    @Override
+    public void acceptMessageFromProfile(String msg) {
+        //TODO TEST
+        List<WishListProductDTO> productsFromProfile=new ArrayList<>();
+
+        productRepository.getProductByKeyword(msg).forEach(product -> productsFromProfile.add(wishListProductDTO(product)));
+
+        productsFromProfile.stream().forEach(product -> publisher.publishMsg(product));
+    }
+
+    @Override
+    public List<String> findProductBySearch(List<String> msg){
+        //TODO TEST
+        List<String> productCodes = new ArrayList<>();
+        List<Product > list = new ArrayList<>();
+
+        msg.forEach(keyword -> productRepository.getProductByKeyword(keyword).stream().forEach(product -> list.add(product)));
+
+        list.forEach(product -> productCodes.add(product.getCode()));
+
+        return productCodes;
     }
 
     @Override

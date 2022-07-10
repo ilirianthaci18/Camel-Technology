@@ -14,8 +14,8 @@ public class RecommendationMapper {
         RecommendationDTO recommendationDTO = modelMapper.map(recommendation, RecommendationDTO.class);
 
         recommendationDTO.setId(recommendation.getId());
-        recommendationDTO.setNotInterested(recommendation.isNotInterested());
-        recommendationDTO.setUser(toUserDTORecommendation(recommendation.getUser()));
+//        recommendationDTO.setNotInterested(recommendation.isNotInterested());
+//        recommendationDTO.setUser(toUserDTORecommendation(recommendation.getUser()));
 
         return recommendationDTO;
     }
@@ -23,7 +23,7 @@ public class RecommendationMapper {
     public static RecommendationDTOUser toRecommendationDTOUser(Recommendation recommendation) {
         RecommendationDTOUser recommendationDTOUser = modelMapper.map(recommendation, RecommendationDTOUser.class);
 
-        recommendationDTOUser.setNotInterested(recommendation.isNotInterested());
+//        recommendationDTOUser.setNotInterested(recommendation.isNotInterested());
 
         return recommendationDTOUser;
     }

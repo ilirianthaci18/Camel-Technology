@@ -13,10 +13,10 @@ public class WishListMapper {
     public static WishListDTO toWishListDTO(WishList wishList) {
         WishListDTO wishListDTO = modelMapper.map(wishList, WishListDTO.class);
 
-        wishListDTO.setId(wishList.getId());
-        wishListDTO.setValueOfWishList(wishList.getValueOfWishList());
-        wishListDTO.setDetails(wishList.getDetails());
-        wishListDTO.setUser(toUserDTOWishList(wishList.getUser()));
+//        wishListDTO.setId(wishList.getId());
+//        wishListDTO.setValueOfWishList(wishList.getValueOfWishList());
+//        wishListDTO.setDetails(wishList.getDetails());
+//        wishListDTO.setUser(toUserDTOWishList(wishList.getUser()));
 
         return wishListDTO;
     }
@@ -24,8 +24,8 @@ public class WishListMapper {
     public static WishListDTOUser toWishListDTOUser(WishList wishList) {
         WishListDTOUser wishListDTOUser = modelMapper.map(wishList, WishListDTOUser.class);
 
-        wishListDTOUser.setValueOfWishList(wishList.getValueOfWishList());
-        wishListDTOUser.setDetails(wishList.getDetails());
+//        wishListDTOUser.setValueOfWishList(wishList.getValueOfWishList());
+//        wishListDTOUser.setDetails(wishList.getDetails());
 
         return wishListDTOUser;
     }

@@ -15,14 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+@Entity(name="`user`")
 @Table
 public class User {
     @Id
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     @Column
-    private int id;
+    private Long id;
 
     @Column
     private String name;
@@ -59,8 +59,8 @@ public class User {
     @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
     private ShoppingCart shoppingCart;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Recommendation> recommendationList = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<Recommendation> recommendationList = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "user", fetch = FetchType.LAZY)
     private List<ShipmentTracking> shipmentTrackingList = new ArrayList<>();
@@ -78,10 +78,10 @@ public class User {
         return shoppingCart;
     }
 
-    @JsonManagedReference
-    public List<Recommendation> getRecommendationList() {
-        return recommendationList;
-    }
+//    @JsonManagedReference
+//    public List<Recommendation> getRecommendationList() {
+//        return recommendationList;
+//    }
 
     @JsonManagedReference
     public List<ShipmentTracking> getShipmentTrackingList() {
@@ -93,12 +93,12 @@ public class User {
         return historicalOrderList;
     }
 
-    public void addRecommendation(Recommendation recommendation) {
-        if (!recommendationList.contains(recommendation)) {
-            recommendationList.add(recommendation);
-            recommendation.setUser(this);
-        }
-    }
+//    public void addRecommendation(Recommendation recommendation) {
+//        if (!recommendationList.contains(recommendation)) {
+//            recommendationList.add(recommendation);
+////            recommendation.setUser(this);
+//        }
+//    }
 
     public void addShipmentTracking(ShipmentTracking shipmentTracking) {
         if (!shipmentTrackingList.contains(shipmentTracking)) {

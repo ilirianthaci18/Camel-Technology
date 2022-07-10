@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class OrderEmailDTO {
+public class OrderEmailDTO{
     private String email;
     private String ship_to;
     private String orderStatus;

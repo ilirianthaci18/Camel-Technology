@@ -7,6 +7,7 @@ import org.ubt.profile.model.*;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
 
     private void initializeCustomer(){
         Customer customer=new Customer().builder()
-                .id(124855)
+//                .id(124855)
                 .postalCode("10000")
                 .billindAddress("Prishtine,Lakrishte")
                 .shippingAddress("Prishtine,Lakrishte")
@@ -32,7 +33,7 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .build();
 
         Customer customer2=new Customer().builder()
-                .id(124856)
+//                .id(124856)
                 .postalCode("20000")
                 .billindAddress("Prizren,Arbane")
                 .shippingAddress("Prizren,Arbane")
@@ -41,7 +42,7 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .build();
 
         Customer customer3=new Customer().builder()
-                .id(124857)
+//                .id(124857)
                 .postalCode("20000")
                 .billindAddress("Prizren,Ortakoll")
                 .shippingAddress("Prizren,Ortakoll")
@@ -50,7 +51,7 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
                 .build();
 
         Customer customer4=new Customer().builder()
-                .id(124856)
+//                .id(124856)
                 .postalCode("1010")
                 .billindAddress("Inner Stadt,Viene")
                 .shippingAddress("Inner Stadt,Viene")
@@ -198,36 +199,34 @@ public class DatabaseInitializationImpl implements DatabaseInitialization {
 
     private void initializeWishList(){
         WishList wishList = new WishList().builder()
-                .details("Wishlist content: 5 Products")
-                .userId(1)
-                .valueOfWishList(350.55)
+                .details(Collections.singletonList("Wishlist content: 5 Products"))
+                .userId("ilirianthaqi@live.com")
+//                .valueOfWishList(350.55)
                 .build();
 
         WishList wishList2 = new WishList().builder()
-                .details("Wishlist content: 8 Products")
-                .userId(2)
-                .valueOfWishList(950.55)
+                .details(Collections.singletonList("Wishlist content: 8 Products"))
+                .userId("ilirianthaqi@live.com")
+//                .valueOfWishList(950.55)
                 .build();
 
         WishList wishList3 = new WishList().builder()
-                .details("Wishlist content: 6 Products")
-                .userId(3)
-                .valueOfWishList(220.40)
+                .details(Collections.singletonList("Wishlist content: 6 Products"))
+                .userId("ilirianthaqi@live.com")
+//                .valueOfWishList(220.40)
                 .build();
 
         WishList wishList4 = new WishList().builder()
-                .details("Wishlist content: 9 Products")
-                .userId(4)
-                .valueOfWishList(900.40)
+                .details(Collections.singletonList("Wishlist content: 9 Products"))
+                .userId("ilirianthaqi@live.com")
+//                .valueOfWishList(900.40)
                 .build();
 
         WishList wishList5 = new WishList().builder()
-                .details("Wishlist content: 9 Products")
-                .userId(5)
-                .valueOfWishList(200.50)
+                .details(Collections.singletonList("Wishlist content: 9 Products"))
+                .userId("ilirianthaqi@live.com")
+//                .valueOfWishList(200.50)
                 .build();
 
     }
-
-
 }

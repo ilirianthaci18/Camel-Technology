@@ -56,4 +56,8 @@ public interface ProductService {
     OrderTaking getOrderTakingById(int id);
 
     void saveOrderTaking(OrderTaking brand);
+
+    void acceptMessageFromProfile(String msg);
+
+    List<String> findProductBySearch(List<String> msg);
 }

@@ -30,9 +30,9 @@ public class UserMapper {
         userDTO.setWishList(toWishListDTOUser(user.getWishList()));
         userDTO.setShoppingCart(toShoppingCartDTOUser(user.getShoppingCart()));
 
-        user.getRecommendationList().stream().forEach(recommendation -> {
-            userDTO.getRecommendations().add(toRecommendationDTOUser(recommendation));
-        });
+//        user.getRecommendationList().stream().forEach(recommendation -> {
+//            userDTO.getRecommendations().add(toRecommendationDTOUser(recommendation));
+//        });
 
         user.getHistoricalOrderList().stream().forEach(historicalOrder -> {
             userDTO.getHistoricalOrders().add(toHistoricalOrderDTOUser(historicalOrder));

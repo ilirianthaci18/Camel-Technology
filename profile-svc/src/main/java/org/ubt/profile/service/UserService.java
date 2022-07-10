@@ -11,16 +11,16 @@ public interface UserService {
 
     void saveUser(User user);
 
-    void removeUser(int id);
+    void removeUser(Long id);
 
     User updateUser(User product);
 
-    User getUserById(int id);
+    User getUserById(Long id);
 
-    void addRecommendationToUser(int userId, int recommendationId);
+    void addRecommendationToUser(Long userId, int recommendationId);
 
-    void addShipmentTrackingToUser(int userId, int shipmentTrackingId);
+    void addShipmentTrackingToUser(Long userId, int shipmentTrackingId);
 
-    void addHistoricalOrderToUser(int userId, int historicalOrderId);
+    void addHistoricalOrderToUser(Long userId, int historicalOrderId);
 
 }

@@ -31,6 +31,11 @@ public class ProductController {
         return productService.getProductNames();
     }
 
+    @GetMapping("/codes/{prodCodes}")
+    public List<String> getProductCodes(@PathVariable List<String> prodCodes){
+        //TODO test
+        return productService.findProductBySearch(prodCodes);
+    }
     @DeleteMapping("/{id}")
     public void removeProduct(@PathVariable Long id) {
         productService.removeProduct(id);

@@ -1,5 +1,7 @@
 package org.ubt.mail.service;
 
+import com.thoughtworks.xstream.core.util.Fields;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +16,10 @@ import org.ubt.mail.model.EmailDetails;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -76,13 +82,14 @@ public class EmailServiceImpl implements EmailService{
 
     }
 
+    @SneakyThrows
     @Override
     public void receiveMsgToKafka(Object obj) {
         log.info("Msg been received "+obj);
-
-        ModelMapper modelMapper =new org.modelmapper.ModelMapper();
+        ModelMapper modelMapper=new ModelMapper();
         OrderEmailDTO orderEmailDTO=modelMapper.map(obj,OrderEmailDTO.class);
-        obj.getClass().get
-        log.info("this is it baby ! {} ",orderEmailDTO);
+        sendSimpleMail(new EmailDetails(orderEmailDTO.getEmail(),"Thank you for your order",
+                "Your order price is :"+orderEmailDTO.getTotalPrice()+" shipped to "+orderEmailDTO.getShip_to()+" with status "+orderEmailDTO.getOrderStatus()+" with date "+ orderEmailDTO.getOrdered()));
+
     }
 }
