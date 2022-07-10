@@ -28,12 +28,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void removeUser(@PathVariable int id) {
+    public void removeUser(@PathVariable Long id) {
         userService.removeUser(id);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
@@ -43,17 +43,17 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/recommendation/{recommendationId}")
-    public void addRecommendationToUser(@PathVariable int userId, @PathVariable int recommendationId) {
+    public void addRecommendationToUser(@PathVariable Long userId, @PathVariable int recommendationId) {
         userService.addRecommendationToUser(userId, recommendationId);
     }
 
     @PostMapping("/{userId}/shipmentTracking/{shipmentTrackingId}")
-    public void addShipmentTrackingToUser(@PathVariable int userId, @PathVariable int shipmentTrackingId) {
+    public void addShipmentTrackingToUser(@PathVariable Long userId, @PathVariable int shipmentTrackingId) {
         userService.addShipmentTrackingToUser(userId, shipmentTrackingId);
     }
 
     @PostMapping("/{userId}/historicalOrder/{historicalOrderId}")
-    public void addHistoricalOrderToUser(@PathVariable int userId, @PathVariable int historicalOrderId) {
+    public void addHistoricalOrderToUser(@PathVariable Long userId, @PathVariable int historicalOrderId) {
         userService.addHistoricalOrderToUser(userId, historicalOrderId);
     }
 

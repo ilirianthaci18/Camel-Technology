@@ -14,6 +14,6 @@ public class OrderEmailDTO {
     private String ship_to;
     private String orderStatus;
     private double totalPrice;
-    private LocalDateTime ordered;
-    private LocalDateTime shipped;
+    private String ordered;
+    private String shipped;
 }

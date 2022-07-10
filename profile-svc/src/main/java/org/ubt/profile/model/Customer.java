@@ -11,13 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
-    private int id;
+    private String id;
     private String postalCode;
     private String billindAddress;
     private String shippingAddress;
     private String city;
     private String state;
-    private List<Recommendation> recommendations;
+//    private List<Recommendation> recommendations;
     private List<HistoricalOrder> historicalOrders;
 }
 

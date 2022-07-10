@@ -29,8 +29,8 @@ public class OrderMapper {
         orderEmailDTO.setShip_to(order.getShip_to());
         orderEmailDTO.setOrderStatus(order.getStatus().toString());
         orderEmailDTO.setTotalPrice(order.getTotalPrice());
-        orderEmailDTO.setOrdered(order.getOrdered());
-        orderEmailDTO.setShipped(order.getShipped());
+        orderEmailDTO.setOrdered(order.getOrdered().toString());
+        orderEmailDTO.setShipped(order.getShipped().toString());
 
         return orderEmailDTO;
     }

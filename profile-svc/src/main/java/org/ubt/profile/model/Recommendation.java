@@ -1,15 +1,15 @@
 package org.ubt.profile.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table
 public class Recommendation {
@@ -17,18 +17,25 @@ public class Recommendation {
     @SequenceGenerator(name = "recommendation_sequence", sequenceName = "recommendation_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recommendation_sequence")
     @Column
-    private int id;
+    private Long id;
 
     @Column
-    private boolean notInterested;
+    @NonNull
+    private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @NonNull
+    @ElementCollection
+    @CollectionTable(name="productCodes",joinColumns = @JoinColumn(name="email"))
+    @Column(name="product_codes")
+    private List<String> productCodes;
 
-    @JsonManagedReference
-    public User getUser() {
-        return user;
-    }
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    private User user;
+//
+//    @JsonManagedReference
+//    public User getUser() {
+//        return user;
+//    }
 
 }

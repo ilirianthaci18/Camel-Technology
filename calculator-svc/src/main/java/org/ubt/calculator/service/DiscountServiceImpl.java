@@ -16,4 +16,5 @@ public class DiscountServiceImpl implements DiscountService{
 
         calculatorPublisher.publishCalculatedPrice(Double.toString(totalPrice));
     }
+
 }

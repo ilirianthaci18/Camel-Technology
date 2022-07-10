@@ -24,6 +24,17 @@ public class ProductMapper {
         return cartProductDTO;
     }
 
+    public static WishListProductDTO wishListProductDTO(Product profile){
+        WishListProductDTO wishListProductDTO=modelMapper.map(profile,WishListProductDTO.class);
+
+        wishListProductDTO.setProductImg(profile.getMainImage());
+        wishListProductDTO.setName(profile.getName());
+        wishListProductDTO.setPrice(profile.getPrice());
+        wishListProductDTO.setProductCode(profile.getCode());
+
+        return wishListProductDTO;
+    }
+
     public static ProductDTO toProductDTO(Product product) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
 

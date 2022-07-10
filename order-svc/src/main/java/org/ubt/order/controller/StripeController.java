@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.ubt.order.model.CheckoutPayment;
 
@@ -20,7 +21,7 @@ import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
-@CrossOrigin(originPatterns = "*")
+@CrossOrigin(originPatterns = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class StripeController {

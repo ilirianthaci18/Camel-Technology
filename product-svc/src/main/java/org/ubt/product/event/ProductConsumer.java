@@ -33,5 +33,13 @@ public class ProductConsumer {
 //        productService.removeProductQuantity(str,1);
         inventoryService.removeProductQuantity(str,1);
     }
+
+    @KafkaListener(topics = "wishlist-product",groupId = "group-id-1")
+    public void listen3(ConsumerRecord<String,String> payload){
+        String str=payload.value().substring(1,payload.value().length()-1);
+        log.info("Getting kafka message {}",str);
+
+        productService.acceptMessageFromProfile(str);
+    }
 }
 
