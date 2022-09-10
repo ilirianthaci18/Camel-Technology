@@ -1,0 +1,52 @@
+#eureka:
+#    client:
+#        enabled: false
+#        service-url:
+#            defaultZone: http://eureka-server:8761/eureka
+server:
+    port: 8080
+spring:
+    application:
+        name: mail-svc
+    autoconfigure:
+        exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    kafka:
+        bootstrap-servers: kafka-broker:9092
+        producer:
+            acks: all
+            bootstrap-servers: kafka-broker:9092
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            properties:
+                spring:
+                    json:
+                        add:
+                            type:
+                                headers: false
+            value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        properties:
+            sasl:
+                mechanism: PLAIN
+            security:
+                protocol: PLAINTEXT
+    mail:
+        host: smtp.gmail.com
+        password: ulpevvajqkbmuewj
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: cameltechinfo@gmail.com
+    zipkin:
+        base-url: http://zipkin:9411
+    jwt:
+        aws:
+            identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0
+            jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+            connectionTimeout: 2000
+            readTimeout: 2000
+eureka:
+    client:
+        enabled: false

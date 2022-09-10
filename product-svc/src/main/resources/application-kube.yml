@@ -1,0 +1,62 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: product
+  #Database Config
+#  zipkin:
+#    base-url: http://zipkin:9411
+  datasource:
+    url: jdbc:postgresql://postgres:5432/cameltechproduct
+    username: cameltech
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        format_sql : true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto : update
+    show-sql: true
+  #Cache config
+  cache:
+    type: simple
+    redis:
+      time-to-live: 1000S
+
+  #Kafka
+  kafka:
+    bootstrap-servers:  10.100.153.206:9092
+    producer:
+      acks: all
+      bootstrap-servers: 10.100.153.206:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      sasl:
+        mechanism: PLAIN
+      security:
+        protocol: PLAINTEXT
+  jwt:
+    aws:
+      identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0
+      jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+      connectionTimeout: 2000
+      readTimeout: 2000
+
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://eureka-server:8761/eureka
+#      fetch-registry: false
+#      register-with-eureka : false
+#    enabled: false
+
+
+#postgres,zipkin,kafka(broker) will be only the name of the service thats how services in k8s communicate like in docker

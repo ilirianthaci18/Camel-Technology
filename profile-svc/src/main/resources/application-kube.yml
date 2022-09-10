@@ -1,0 +1,58 @@
+#eureka:
+#    client:
+#        service-url:
+#            defaultZone: http://eureka-server:8761/eureka
+#        enabled: false
+server:
+    port: 8081
+spring:
+    application:
+        name: profile-svc
+    cache:
+        redis:
+            cache-null-values: true
+            time-to-live: 40000
+        type: redis
+    datasource:
+        url: jdbc:postgresql://postgres:5432/cameltechprofile
+        username: cameltech
+        password: password
+    redis-stack:
+      connect: redis-stack
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+        show-sql: true
+    redis:
+        host: 127.0.0.1
+        password: password
+        port: 6379
+  #Kafka
+    kafka:
+        bootstrap-servers: kafka-broker:9092
+        producer:
+          acks: all
+          bootstrap-servers: kafka-broker:9092
+          key-serializer: org.apache.kafka.common.serialization.StringSerializer
+          properties:
+            spring:
+              json:
+                add:
+                  type:
+                    headers: false
+          value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        properties:
+          sasl:
+            mechanism: PLAIN
+          security:
+            protocol: PLAINTEXT
+    jwt:
+       aws:
+        identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0
+        jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+        connectionTimeout: 2000
+        readTimeout: 2000
