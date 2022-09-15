@@ -1,0 +1,31 @@
+server:
+    port: 8087
+spring:
+    redis-stack:
+        connect: redis-stack:6379
+    kafka:
+        bootstrap-servers: broker:9092
+        producer:
+            acks: all
+            bootstrap-servers: broker:9092
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            properties:
+                spring:
+                    json:
+                        add:
+                            type:
+                                headers: false
+            value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        properties:
+            sasl:
+                mechanism: PLAIN
+            security:
+                protocol: PLAINTEXT
+    zipkin:
+        base-url: http://zipkin:9411
+    jwt:
+        aws:
+            identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/
+            jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+            connectionTimeout: 2000
+            readTimeout: 2000

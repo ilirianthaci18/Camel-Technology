@@ -1,0 +1,25 @@
+#eureka:
+#    client:
+#        service-url:
+#            defaultZone: http://eureka-server:8761/eureka
+eureka:
+    client:
+        enabled: false
+server:
+    port: 8085
+spring:
+    application:
+        name: chat-svc
+    autoconfigure:
+        exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    kafka:
+        consumer:
+            group-id: messages
+    zipkin:
+        base-url: http://zipkin:9411
+    jwt:
+        aws:
+            identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/
+            jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+            connectionTimeout: 2000
+            readTimeout: 2000

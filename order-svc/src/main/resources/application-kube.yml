@@ -1,0 +1,53 @@
+#eureka:
+#    client:
+#        enabled: false
+#        service-url:
+#            defaultZone: http://eureka-server:8761/eureka
+server:
+    port: 8086
+spring:
+    redis-stack:
+        connect: redis-stack:6379
+    application:
+        name: order-svc
+    datasource:
+        url: jdbc:postgresql://postgres:5432/
+        username: cameltech
+        password:
+    jpa:
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+        show-sql: true
+    jwt:
+        aws:
+            connectionTimeout: 2000
+            identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/
+            jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+            readTimeout: 2000
+    kafka:
+        bootstrap-servers: kafka-broker:9092
+        producer:
+            acks: all
+            bootstrap-servers: kafka-broker:9092
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            properties:
+                spring:
+                    json:
+                        add:
+                            type:
+                                headers: false
+            value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        properties:
+            sasl:
+                mechanism: PLAIN
+            security:
+                protocol: PLAINTEXT
+    stripe:
+        secret:
+            key:
+    zipkin:
+        base-url: http://zipkin:9411

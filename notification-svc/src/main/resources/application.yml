@@ -1,0 +1,38 @@
+app:
+    firebase-configuration-file: camel-technology-firebase-adminsdk-4zvn8-836f8be0a6.json
+eureka:
+    client:
+        enabled: false
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+server:
+    port: 8084
+spring:
+    application:
+        name: notification-svc
+    autoconfigure:
+        exclude: 'org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration '
+    kafka:
+        bootstrap-servers: localhost:9092
+        producer:
+            acks: all
+            bootstrap-servers: localhost:9092
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            properties:
+                spring:
+                    json:
+                        add:
+                            type:
+                                headers: false
+            value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        properties:
+            sasl:
+                mechanism: PLAIN
+            security:
+                protocol: PLAINTEXT
+    jwt:
+        aws:
+            identityPoolUrl: https://cognito-idp.eu-central-1.amazonaws.com/
+            jwkUrl: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C72DqiBn0/.well-known/jwks.json
+            connectionTimeout: 2000
+            readTimeout: 2000

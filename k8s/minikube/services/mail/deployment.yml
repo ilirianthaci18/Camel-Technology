@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail
+  labels:
+    app: mail
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mail
+      labels:
+        app: mail
+    spec:
+      containers:
+        - name: mail
+          image: ilirianth18/mail-svc:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: mail

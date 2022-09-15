@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator
+  labels:
+    app: calculator
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: calculator
+      labels:
+        app: calculator
+    spec:
+      containers:
+        - name: calculator
+          image: ilirianth18/calculator-svc:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8087
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: calculator

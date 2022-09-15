@@ -1,0 +1,17 @@
+spring:
+  security:
+    basic:
+      enabled: false
+  application:
+    name: eureka-server
+  main:
+    banner-mode: off
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
